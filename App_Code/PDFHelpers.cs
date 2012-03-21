@@ -160,7 +160,7 @@ namespace nsPDFHelpers{
 
             ExpertPdf.MergePdf.PDFMerge pdfMerge = new ExpertPdf.MergePdf.PDFMerge(pdfDocumentOptions);
 
-            //pdfMerge.LicenseKey = "MhkAEgoSAQMHEgYcAhIBAxwDABwLCwsL";
+        
 
             foreach (var item in list)
             {
