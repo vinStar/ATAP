@@ -37,6 +37,9 @@ namespace nsPDFHelpers{
 
         public string _sFile { get; set; }
         public string _sPath { get; set; }
+
+        public string _Volume { get; set; }
+        public string _Section { get; set; }
     }
         
 
@@ -51,13 +54,13 @@ namespace nsPDFHelpers{
         {
             List<FilesToGrab> oList = new List<FilesToGrab>();
 
-            FilesToGrab oAdd1 = new FilesToGrab(){ _iPages = 26, _sFileName="Adopt-200.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/Adopt-200.pdf" };
+            FilesToGrab oAdd1 = new FilesToGrab() { _iPages = 26, _sFileName = "Adopt-200.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/Adopt-200.pdf" };
             oList.Add(oAdd1);
 
-            FilesToGrab oAdd2 = new FilesToGrab(){ _iPages = 6, _sFileName ="ADR.pdf", _sFileURL="http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/ADR.pdf" };
+            FilesToGrab oAdd2 = new FilesToGrab() { _iPages = 6, _sFileName = "ADR.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/ADR.pdf" };
             oList.Add(oAdd2);
 
-            FilesToGrab oAdd3 = new FilesToGrab(){ _iPages =14, _sFileName = "CR-180.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/CR-180.pdf" };
+            FilesToGrab oAdd3 = new FilesToGrab() { _iPages = 14, _sFileName = "CR-180.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/CR-180.pdf" };
             oList.Add(oAdd3);
 
             FilesToGrab oAdd4 = new FilesToGrab() { _iPages = 68, _sFileName = "DV-100.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/DV-100.pdf" };
@@ -70,12 +73,12 @@ namespace nsPDFHelpers{
             oList.Add(oAdd6);
 
             FilesToGrab oAdd7 = new FilesToGrab() { _iPages = 42, _sFileName = "WV-100.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/WV-100.pdf" };
-            FilesToGrab oAdd8 = new FilesToGrab() { _iPages = 30, _sFileName = "UD-100.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/UD-100.pdf" };
+            //FilesToGrab oAdd8 = new FilesToGrab() { _iPages = 30, _sFileName = "UD-100.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/UD-100.pdf" };
             FilesToGrab oAdd9 = new FilesToGrab() { _iPages = 48, _sFileName = "CH-150.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/CH-150.pdf" };
             FilesToGrab oAdd10 = new FilesToGrab() { _iPages = 58, _sFileName = "FL-800.pdf", _sFileURL = "http://www.monterey.courts.ca.gov/Documents/Forms/Court%20Packets/FL-800.pdf" };
 
             oList.Add(oAdd7);
-            oList.Add(oAdd8);
+            //oList.Add(oAdd8);
             oList.Add(oAdd9);
             oList.Add(oAdd10);
             return oList;
@@ -164,13 +167,10 @@ namespace nsPDFHelpers{
             /////////////////////////////////////////////
 
 
-            string[] files = { @"C:\Inetpub\ATAP\Files\AD.pdf", @"C:\Inetpub\ATAP\Files\SC-100.pdf" };
-
-
 
             Document document = new Document(PageSize.A4, 10, 10, 10, 10);
 
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(@"C:\Inetpub\ATAP\Files\New.pdf", FileMode.Create));
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(sPath + sFileName, FileMode.Create));
 
             document.Open();
 
@@ -178,11 +178,11 @@ namespace nsPDFHelpers{
             PdfImportedPage page;
 
 
-            foreach (var file in files)
+            foreach (var ls in list)
             {
 
 
-                PdfReader reader = new PdfReader(file.ToString());
+                PdfReader reader = new PdfReader(sPath + ls._sFile);
 
 
                 for (int i = 1; i <= reader.NumberOfPages; i++)

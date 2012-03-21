@@ -79,7 +79,7 @@ public partial class _Default : System.Web.UI.Page
             BaseMethods oJob2 = new BaseMethods();
             oJob2.GetSinglePDFfromManyPDFs(LogList, sTemp, "bundle.pdf");
 
-            Response.Redirect("Sessions.aspx");
+            Response.Redirect("Processed.aspx");
 
         }
     }

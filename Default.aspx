@@ -69,7 +69,7 @@
  <div id="progressbar" class="progress progress-striped
      active">
   <div class="bar"
-       style="width: 99%;"></div>
+       style="width: 75%;"></div>
 </div>
 
 </div>
@@ -79,7 +79,7 @@
 
    <script type="text/javascript">
 
-       $('#btnGetPDFs').click(function () {
+       $('#ContentPlaceHolder1_btnGetPDFs').click(function () {
 
            $("#progressbar").show();
            // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
@@ -94,11 +94,7 @@
        });
 
 
-       $(".mycheckbox").click(function () {
-
-           $(this).attr('checked');
-
-       });
+     
 
        $(document).ready(function () {
 
