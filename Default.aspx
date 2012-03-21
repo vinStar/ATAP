@@ -1,11 +1,11 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head runat="server">
     <title>ATAP</title>
-    <link href="Styles/Table.css" rel="stylesheet" type="text/css" />
+  
     <link href="Styles/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
     <link href="Styles/custom-theme/jquery.ui.1.8.16.ie.css" rel="stylesheet" type="text/css" />
     <link href="Styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -18,6 +18,7 @@
 
     <link href="Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
     <link href="Styles/docs.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/checkboxes.css" rel="stylesheet" type="text/css" />
     <script src="Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
     <script src="Scripts/bootstrap.min.js" type="text/javascript"></script>
@@ -31,9 +32,9 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-      
+      <div style="padding:25px">
           <a class="brand" href="#">ATAP Project</a>
-         
+         </div>
           
         </div>
       </div>
@@ -41,25 +42,43 @@
 
     <div class="container">
 
-    <div class="subnav subnav-fixed">
+
+
+    
+
+
      <ul class="nav nav-pills">
-              <li class="active"><a href="Default.aspx">Appeals Lookup</a></li>
-
+              <li class="active">
+    
+              <a href="Default.aspx">
+              <i class="icon-search icon-white"></i> Appeals Lookup</a></li>
+               <li>
+              <a href="Default.aspx#">Recent Jobs</a>
+               </li> 
+                <li>
+              <a href="Default.aspx#">Print Page</a>
+               </li> 
             </ul>
-    </div>
 
-      
+
+            <div class="alert alert-info">
+            The max pages for each volume is <b>100</b> pages.
+            </div>
+  
 
         <asp:GridView ID="gvDocsToPDF" UseAccessibleHeader="true" CellPadding="5" CellSpacing="0" Width="100%"
            CssClass="table table-bordered table-striped" AutoGenerateColumns="false"
-            
+       HeaderStyle-CssClass="navbar-inner"
              runat="server">
              <Columns>
              <asp:TemplateField>
              <ItemTemplate>
-             
-                 <asp:CheckBox ID="cbSelect" AutoPostBack="true" OnCheckedChanged="cbSelect_CheckedChanged" Checked="true" runat="server">
+       
+                 <asp:CheckBox ID="cbSelect"  AutoPostBack="true"   OnCheckedChanged="cbSelect_CheckedChanged" Checked="true" runat="server">
                  </asp:CheckBox>
+    
+
+
              </ItemTemplate>
              </asp:TemplateField>
 
@@ -67,24 +86,38 @@
              <asp:TemplateField HeaderText="Section" />
              <asp:BoundField DataField="_sFileName" HeaderText="File Name" />
              <asp:BoundField DataField="_sFileURL" HeaderText="File URL" />
-             <asp:BoundField DataField="_iJobOrder" HeaderText="Order" />
+             <asp:BoundField DataField="_iJobOrder" HeaderText="Order" Visible="false" />
              <asp:BoundField DataField="_iPages" HeaderText="Pages" />
 
              </Columns>
         </asp:GridView>
-        <asp:Literal ID="ltTotalPgs" runat="server"></asp:Literal><br />
 
-        <asp:Literal ID="ltLocalDir" runat="server"></asp:Literal><br />
-        <asp:Literal ID="ltFolderDir" runat="server"></asp:Literal><br />
 
-        <br />
-
-      
-        <asp:Button ID="btnGetPDFs" runat="server" CssClass="btn btn-success btn-large" Text="Get PDFs" 
-            onclick="btnGetPDFs_Click" />
-
+   
  
 
+ 
+      <div class="row">
+      <div class="span6">
+      <div class="well">
+            <asp:Button ID="btnGetPDFs" runat="server" CssClass="btn btn-info btn-large" Text="Get PDFs" 
+            onclick="btnGetPDFs_Click" />
+            </div>
+      </div>
+      <div class="span6">
+       <div class="well">
+         <h3>Total PDF Pages</h3>
+         <span class="badge badge-inverse"> <asp:Literal ID="ltTotalPgs" runat="server"></asp:Literal></span>
+        
+        <asp:Literal ID="ltLocalDir" Visible="false" runat="server"></asp:Literal>
+        <asp:Literal ID="ltFolderDir" Visible="false" runat="server"></asp:Literal>
+        </div>
+      </div>
+
+  
+        
+
+        </div>
 
     </div>
 
@@ -116,6 +149,12 @@
 
         });
 
+
+        $(".mycheckbox").click(function () {
+
+            $(this).attr('checked');
+
+        });
 
         $(document).ready(function () {
 
