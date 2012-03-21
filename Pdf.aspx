@@ -9,8 +9,15 @@
 <body>
     <form id="form1" runat="server">
     <div>
+
+        <asp:GridView ID="gvFiles" runat="server">
+        </asp:GridView>
+
         <asp:Button ID="btn" runat="server" Text="try it" onclick="btn_Click" />
     
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+
+
     </div>
     </form>
 </body>

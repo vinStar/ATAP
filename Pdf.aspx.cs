@@ -5,44 +5,73 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 public partial class Pdf : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
-      
+        if (!IsPostBack)
+        {
+            string[] files = { @"C:\Inetpub\ATAP\Files\AD.pdf", @"C:\Inetpub\ATAP\Files\SC-100.pdf" };
+             gvFiles.DataSource = files;
+             gvFiles.DataBind();
+
+
+        }
 
 
     }
+
+
+
+
+
     protected void btn_Click(object sender, EventArgs e)
     {
-       
-        string[] files = { "C:\\Inetpub\\ATAP\\Files\\Adopt-200.pdf", "C:\\Inetpub\\ATAP\\Files\\SC-100.pdf" };
 
-        // Open the output document
-        PdfDocument outputDocument = new PdfDocument();
+        string[] files = { @"C:\Inetpub\ATAP\Files\AD.pdf", @"C:\Inetpub\ATAP\Files\SC-100.pdf" };
 
-        // Iterate files
-        foreach (string file in files)
+        //PdfReader reader = new PdfReader(@"C:\Inetpub\ATAP\Files\Adopt-200.pdf");
+        //PdfReader reader = new PdfReader(@"C:\Inetpub\ATAP\Files\FW-001.pdf");
+
+
+        Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+
+        PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(@"C:\Inetpub\ATAP\Files\New.pdf", FileMode.Create));
+
+        document.Open();
+
+
+        PdfImportedPage page;
+
+
+        foreach (var file in files)
         {
-            // Open the document to import pages from it.
-            PdfDocument inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.ReadOnly);
 
-            // Iterate pages
-            int count = inputDocument.PageCount;
-            for (int idx = 0; idx < count; idx++)
+
+            PdfReader reader = new PdfReader(file.ToString());
+           
+
+            for (int i = 1; i <= reader.NumberOfPages; i++)
             {
-                // Get the page from the external document...
-                PdfPage page = inputDocument.Pages[idx];
-                // ...and add it to the output document.
-                outputDocument.AddPage(page);
+                page = writer.GetImportedPage(reader, i);
+                document.Add(iTextSharp.text.Image.GetInstance(page));
             }
+
+
+            
+
         }
 
-        // Save the document...
-        const string filename = "C:\\Inetpub\\ATAP\\Files\\ConcatenatedDocument1_tempfile.pdf";
-        outputDocument.Save(filename);
+        document.Close();
+
+
+        Label1.Text= "donde!";
+
         // ...and start a viewer.
     }
 }

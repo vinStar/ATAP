@@ -10,6 +10,10 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Diagnostics;
+using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace nsPDFHelpers{
 
@@ -154,21 +158,64 @@ namespace nsPDFHelpers{
         public void GetSinglePDFfromManyPDFs(List<ClientLogger> list, string sPath, string sFileName)
         {
 
-            ExpertPdf.MergePdf.PdfDocumentOptions pdfDocumentOptions = new ExpertPdf.MergePdf.PdfDocumentOptions();
 
-            pdfDocumentOptions.PdfCompressionLevel = ExpertPdf.MergePdf.PDFCompressionLevel.Normal;
+            /////////////////////////////////////////////
+            // itextsharp
+            /////////////////////////////////////////////
 
-            ExpertPdf.MergePdf.PDFMerge pdfMerge = new ExpertPdf.MergePdf.PDFMerge(pdfDocumentOptions);
 
-        
+            string[] files = { @"C:\Inetpub\ATAP\Files\AD.pdf", @"C:\Inetpub\ATAP\Files\SC-100.pdf" };
 
-            foreach (var item in list)
+
+
+            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(@"C:\Inetpub\ATAP\Files\New.pdf", FileMode.Create));
+
+            document.Open();
+
+
+            PdfImportedPage page;
+
+
+            foreach (var file in files)
             {
-                pdfMerge.AppendPDFFile(sPath + item._sFile);
-            }
-            pdfMerge.AppendEmptyPage();
 
-            pdfMerge.SaveMergedPDFToFile(sPath + sFileName);
+
+                PdfReader reader = new PdfReader(file.ToString());
+
+
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    page = writer.GetImportedPage(reader, i);
+                    document.Add(iTextSharp.text.Image.GetInstance(page));
+                }
+
+
+
+
+            }
+
+            document.Close();
+
+
+ 
+
+
+            /////////////////////////////////////////////
+            // EXPERT PDF
+            /////////////////////////////////////////////
+
+            //ExpertPdf.MergePdf.PdfDocumentOptions pdfDocumentOptions = new ExpertPdf.MergePdf.PdfDocumentOptions();
+            //pdfDocumentOptions.PdfCompressionLevel = ExpertPdf.MergePdf.PDFCompressionLevel.Normal;
+            //ExpertPdf.MergePdf.PDFMerge pdfMerge = new ExpertPdf.MergePdf.PDFMerge(pdfDocumentOptions);
+
+            //foreach (var item in list)
+            //{
+            //    pdfMerge.AppendPDFFile(sPath + item._sFile);
+            //}
+            //pdfMerge.AppendEmptyPage();
+            //pdfMerge.SaveMergedPDFToFile(sPath + sFileName);
 
 
         }

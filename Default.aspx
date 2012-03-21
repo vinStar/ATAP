@@ -1,64 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
-
-<!DOCTYPE html>
-
-<html lang="en">
-<head runat="server">
-    <title>ATAP</title>
-  
-    <link href="Styles/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
-    <link href="Styles/custom-theme/jquery.ui.1.8.16.ie.css" rel="stylesheet" type="text/css" />
-    <link href="Styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
-     <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-
-    <link href="Styles/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-    <link href="Styles/docs.css" rel="stylesheet" type="text/css" />
-    <link href="Styles/checkboxes.css" rel="stylesheet" type="text/css" />
-    <script src="Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
-    <script src="Scripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
-    <script src="Scripts/bootstrap.min.js" type="text/javascript"></script>
-    
-
-</head>
-<body>
-    <form id="form1" runat="server">
-
-
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-      <div style="padding:25px">
-          <a class="brand" href="#">ATAP Project</a>
-         </div>
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/ATAP.master" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
     
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-
-     <ul class="nav nav-pills">
-              <li class="active">
-    
-              <a href="Default.aspx">
-              <i class="icon-search icon-white"></i> Appeals Lookup</a></li>
-               <li>
-              <a href="Default.aspx#">Recent Jobs</a>
-               </li> 
-                <li>
-              <a href="Default.aspx#">Print Page</a>
-               </li> 
-            </ul>
 
 
             <div class="alert alert-info">
@@ -119,52 +63,52 @@
 
         </div>
 
-    </div>
 
-
-
-    </form>
     <div id="dialog-modal" title="Loading">
 	
  <div id="progressbar" class="progress progress-striped
      active">
   <div class="bar"
-       style="width: 40%;"></div>
+       style="width: 99%;"></div>
 </div>
 
 </div>
-    <script type="text/javascript">
+ 
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="head" Runat="Server">
 
-        $('#btnGetPDFs').click(function () {
+   <script type="text/javascript">
 
-            $("#progressbar").show();
-            // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
-            $("#dialog:ui-dialog").dialog("destroy");
+       $('#btnGetPDFs').click(function () {
 
-            $("#dialog-modal").dialog({
-                height: 140,
-                modal: true
-            });
+           $("#progressbar").show();
+           // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+           $("#dialog:ui-dialog").dialog("destroy");
+
+           $("#dialog-modal").dialog({
+               height: 100,
+               modal: true
+           });
 
 
-        });
+       });
 
 
-        $(".mycheckbox").click(function () {
+       $(".mycheckbox").click(function () {
 
-            $(this).attr('checked');
+           $(this).attr('checked');
 
-        });
+       });
 
-        $(document).ready(function () {
+       $(document).ready(function () {
 
-            $('#btnGetPDFs').button();
-            $("#progressbar").hide();
+           $('#btnGetPDFs').button();
+           $("#progressbar").hide();
 
-   
-        });
+
+       });
     
     </script>
 
-</body>
-</html>
+</asp:Content>
+
