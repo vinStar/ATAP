@@ -40,7 +40,11 @@
       <div style="padding:25px">
           <a class="brand" href="#">ATAP Project</a>
          </div>
-          
+
+          Signed on as:
+          <a class="btn" href="#"> 
+          <%=Context.User.Identity.Name.ToString() %></a>
+
         </div>
       </div>
     </div>

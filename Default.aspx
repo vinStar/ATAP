@@ -48,7 +48,7 @@
             onclick="btnGetPDFs_Click" />
 
 
-          <input id="btnTest" type="button" class="btn" value="button" />
+
 
             </div>
       </div>
