@@ -46,6 +46,10 @@
       <div class="well">
             <asp:Button ID="btnGetPDFs" runat="server" CssClass="btn btn-info btn-large" Text="Get PDFs" 
             onclick="btnGetPDFs_Click" />
+
+
+          <input id="btnTest" type="button" class="btn" value="button" />
+
             </div>
       </div>
       <div class="span6">
@@ -59,17 +63,16 @@
       </div>
 
   
-        
-
         </div>
 
 
     <div id="dialog-modal" title="Loading">
 	
- <div id="progressbar" class="progress progress-striped
-     active">
-  <div class="bar"
-       style="width: 75%;"></div>
+ <div id="progressbar">
+
+    <h5>Please be patient, this process can take up to a few minutes to complete.</h5><br />
+
+     <img src="Images/progress.gif" />
 </div>
 
 </div>
@@ -82,12 +85,14 @@
        $('#ContentPlaceHolder1_btnGetPDFs').click(function () {
 
            $("#progressbar").show();
-           // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+    
            $("#dialog:ui-dialog").dialog("destroy");
 
            $("#dialog-modal").dialog({
-               height: 100,
-               modal: true
+               autoOpen: true,
+               height: 150,
+               modal: true,
+               resizable: false
            });
 
 
@@ -98,8 +103,13 @@
 
        $(document).ready(function () {
 
-           $('#btnGetPDFs').button();
+           $('#ContentPlaceHolder1_btnGetPDFs').button();
+           $('#btnTest').button();
+        
            $("#progressbar").hide();
+
+
+ 
 
 
        });

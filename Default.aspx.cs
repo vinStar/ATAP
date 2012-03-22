@@ -37,7 +37,7 @@ public partial class _Default : System.Web.UI.Page
         Session.Clear();
     
         BaseMethods oGet = new BaseMethods();
-        gvDocsToPDF.DataSource = oGet.GetForms();
+        gvDocsToPDF.DataSource = oGet.GetJobs();
         gvDocsToPDF.DataBind();
         BindGrid();
 
@@ -53,9 +53,6 @@ public partial class _Default : System.Web.UI.Page
     {
         if (IsPostBack){
 
-
-            Session["sTest"] = "hello!";
-
             string sDir = "";
             string sTemp;
 
@@ -67,19 +64,66 @@ public partial class _Default : System.Web.UI.Page
             DirectoryInfo di = Directory.CreateDirectory(sTmpFolderPath + sDir);
             sTemp = sTmpFolderPath + sDir + "\\" ;
 
-            foreach (var item in sFldr.GetForms())
-	        {
-                BaseMethods oJob = new BaseMethods();
-                LogList.Add(oJob.GetPDFfromURLPDF(item._sFileURL, sTemp, item._sFileName));
-                oJob = null;
-	        }
+
+            foreach (GridViewRow rw in gvDocsToPDF.Rows)
+            {
+                if (rw.RowType == DataControlRowType.DataRow)
+                {
+                    CheckBox cbPDF = new CheckBox();
+                    cbPDF = (CheckBox)(rw.FindControl("cbSelect"));
+
+                    if (cbPDF.Checked)
+                    {
+
+                        string sVolume, sSection, sFileName, sFileURL;
+                        sVolume = rw.Cells[1].Text.ToString();
+                        sSection = rw.Cells[2].Text.ToString();
+                        sFileName = rw.Cells[3].Text.ToString();
+                        sFileURL = rw.Cells[4].Text.ToString();
+
+                        DirectoryInfo oCreate = Directory.CreateDirectory(sTemp + sVolume);
+
+                        BaseMethods oJob = new BaseMethods();
+                        LogList.Add(oJob.GetPDFfromURLPDF(sFileURL, sTemp, sFileName, sVolume, sSection));
+                        oJob = null;
+
+                    }
+
+                }
+            }
 
             Session["sLogs"] = LogList;
+            Session["sDir"] = sDir;
 
-            BaseMethods oJob2 = new BaseMethods();
-            oJob2.GetSinglePDFfromManyPDFs(LogList, sTemp, "bundle.pdf");
+            BaseMethods oJobr = new BaseMethods(); 
+
+            foreach (System.IO.DirectoryInfo g in di.GetDirectories())
+            {
+
+                List<ClientLogger> PDFList = new List<ClientLogger>();
+
+                System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(g.FullName);
+                foreach (System.IO.FileInfo f in dir.GetFiles("*.*"))
+                {
+
+                    ClientLogger pdfLt = new ClientLogger(){
+                        _sFile = f.Name, 
+                        _sPath = f.DirectoryName,
+                    };
+
+                    PDFList.Add(pdfLt);
+                   
+                }
+
+                oJobr.GetSinglePDFfromManyPDFs(PDFList, g.FullName, "_Vol.pdf");
+
+
+            } 
 
             Response.Redirect("Processed.aspx");
+            
+
+           
 
         }
     }
